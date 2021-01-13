@@ -1,0 +1,44 @@
+40 card deck
+- 10 zeros (Club)
+- 10 ones (Diamond)
+- 10 twos (Hearts)
+- 10 threes (spades)
+
+Round order:
+-Players are dealt cards
+-Betting Part
+	- First player opens
+	- Next Player can
+		- Check - Hold hand 
+		- Fold - Refuse participation
+		- Raise - Match opening bet and add more
+		- Call- match opening bet
+-Play Part
+	- Player places a card
+	- Game response: is 9 broken?
+		- Yes - player is out
+		- No - player is in
+- Next Player
+	- Repeat above
+
+- When one player breaks 9 the round is over
+	- Bet pool is divided evenly among the players
+
+- Game continues until a round limit is met or players are unable to bet
+
+Milestones:
+- Create core game (all four players controller by "hot seat")
+- Understand networking element
+- Create networking portion - connect it to core
+- Test barebone features with friends
+- Implement GUI - design cards and board
+- Put GUI on top of Core
+
+AI Notes
+- Look at hand - evaluate based on scale
+	- two 3s = bad hand = fold
+	- two 2s = ok hand = call
+	- two 0s = great hand = raise
+	- else = check
+- If pile <= 6 - Add highest card from hand
+- If pile > 6 - Add lowest card from hand
