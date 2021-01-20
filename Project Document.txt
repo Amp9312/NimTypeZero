@@ -1,27 +1,33 @@
-40 card deck
+40 card deck (This may be tweaked later to balance the game)
 - 10 zeros (Club)
 - 10 ones (Diamond)
 - 10 twos (Hearts)
 - 10 threes (spades)
 
 Round order:
--Players are dealt cards
--Betting Part
+-Dealing Phase
+	- Each Player is given four cards
+
+-Betting Phase
 	- First player opens
+		- Opening the pot - placing the first bet
+		- Fold
+
 	- Next Player can
-		- Check - Hold hand 
+		- Open - placing the first bet (only if first player didn't open)
 		- Fold - Refuse participation
 		- Raise - Match opening bet and add more
 		- Call- match opening bet
--Play Part
-	- Player places a card
+-Play Phase
+	- Player must place a numbered card
 	- Game response: is 9 broken?
 		- Yes - player is out
 		- No - player is in
-- Next Player
-	- Repeat above
+	- Next Player
+		- Repeat above
 
-- When one player breaks 9 the round is over
+-End Round
+	- When one player goes over 9 the round is over
 	- Bet pool is divided evenly among the players
 
 - Game continues until a round limit is met or players are unable to bet
@@ -35,10 +41,25 @@ Milestones:
 - Put GUI on top of Core
 
 AI Notes
-- Look at hand - evaluate based on scale
-	- two 3s = bad hand = fold
-	- two 2s = ok hand = call
-	- two 0s = great hand = raise
-	- else = check
-- If pile <= 6 - Add highest card from hand
-- If pile > 6 - Add lowest card from hand
+- AI Phase ZERO 
+	- Actions are determined at random
+	- Highly inefficient, but playable
+
+- AI Phase ONE
+	- Look at hand - evaluate based on scale
+		- two 3s = bad hand = fold
+		- two 2s = ok hand = call
+		- two 0s = great hand = raise
+		- else = check
+
+- AI Phase TWO
+	- If pile <= 6 - Add highest card from hand
+	- If pile > 6 - Add lowest card from hand
+
+- AI Phase THREE
+	- Combine phase ONE and TWO
+
+
+
+On a very rare case - each player can draw nothing but 1's and 0's. This results
+in a draw - no payout from last hand and start a new hand immediately
