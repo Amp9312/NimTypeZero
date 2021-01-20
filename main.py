@@ -1,14 +1,24 @@
 # Dev - Amp
 # Project - Nim Type Zero
-# Last Modified 1/12/2021
+# Last Modified 1/19/2021
 
-cardTags = ["Spades", "Hearts", "Diamonds", "Clubs"]  # making this a list cleans up a lot of things
+# TODO
+# Add getter methods as more propertiees in the player object are made
+# Implement betting logic
 
-version = "1.0"
+# GLOBAL ASS VARIABLES - SIN DO NOT COMMIT THIS HERESY LATER
+
+CARDTAGS = ["Spades", "Hearts", "Diamonds", "Clubs"]
+
+VERSION = "2.0"
+
+# IMPORTS
 
 import random
 from os import linesep as os_linesep
 
+
+# CLASSES
 
 class Card:
     def __init__(self, suit, val):
@@ -22,34 +32,38 @@ class Card:
 class Deck:
     def __init__(self):
         self.cards = []
-        for s in cardTags:
+        for s in CARDTAGS:
             for v in range(0, 4):
                 self.cards.append(Card(s, v))
 
     def __str__(self):
         result = ""
         for c in self.cards:
-            result += c + os_linesep
+            result += str(c) + os_linesep
         return result
 
+    # Uses psuedo random shenanigans to rearrange the cards in the stack
     def shuffle(self):
         random.shuffle(self.cards)
 
+    # draws exactly one card from the stack (deck). This can be done until the deck is gone (not recommended)
     def drawOneCard(self):
         return self.cards.pop()
 
 
 class Player:
-    def __init__(self, name):
-        self.name = name
-        self.hand = []
+    def __init__(self, name, isHuman=False):
+        self.name = name  # This uniquely identifies the player
+        self.isHuman = isHuman  # This tells us if the player object is playable
+        self.hand = []  # This is an array that contains the players hand - is unique to their object
 
     def __str__(self):
         # nasty one liner: str.join, and list comprehension
         # list comprehensions are your friend. Trust me.
-        return os_linesep + "This is " + self.name + 's Hand:' + os_linesep + os_linesep.join([str(x) for x in self.hand])
+        return os_linesep + "This is " + self.name + 's Hand:' + os_linesep + os_linesep.join(
+            [str(x) for x in self.hand])
 
-    def draw(self, deck, numCards):
+    def draw(self, deck, numCards):  # method that allows one player to draw all four cards for their hand at once
         for _ in range(numCards):
             self.hand.append(deck.drawOneCard())
 
@@ -57,33 +71,71 @@ class Player:
     def whatIsName(self):
         return self.name
 
+    def whatIsStatus(self):
+        return str(self.isHuman)
 
 
-def init(players):
+# FUNCTIONS
+
+def bettingPhase():
+    print("{0}Betting Options: {0} 1.) Fold {0} 2.) Raise {0} 3.) Call".format(os_linesep))
+    playerChoice = input("Which do you choose? {}".format(os_linesep))
+
+    # Implement betting Logic later
+
+
+def initiate(players):
     # test = Card("Hearts", 0)          Debugging card object
-    # test.show()                       Displaying the debugging
+    # print(test)                       Displaying the debugging
+
+    # Creating the actual Deck
     testDeck = Deck()
+
+    # Shuffling that bad boy
     testDeck.shuffle()
-    # testDeck.show()                   Shows all the cards in the deck for debugging purposes
+
+    # show me the shuffled deck
+    # print(testDeck)
+
+    # show me that the player list is shuffled
+    # print(players[1])
+
     # card = testDeck.drawOneCard()     Pop the top card of the deck for debugging purposes (volatile)
     # card.show()                       Shows the card popped (volatile)
 
-    print('Hello! Welcome to Nim Type Zero ' + players[0].whatIsName())
-    print('Ver: ' + version + '\n')
-
-    
-    # Players draw their hands
-    # Note - because cards are being pulled from the stack if you make each player draw 11 instead of 4
-    # the deck WILL run out by the time it gets to player 4
+    # draw players test hands
     for player in players:
         player.draw(testDeck, 4)
 
-    # Show hand for debugging purposes
-    for player in players:
-        print(player)
+    # print players test hands
+    # for player in players:
+    #    print(player)
+
+    print('Hello! Welcome to Nim Type Zero ' + players[0].whatIsName())
+
+    # Reminder for later: os_linesep logic adds the VERSION global
+    # variable to sub for the first {}, and then a newline for the second {}
+    print('Ver: {}{}'.format(VERSION, os_linesep))
+
+    print(players[0])
+
+    bettingPhase()
+
+    # randomize turn order
+    # random.shuffle(players)
+
+    # Betting Phase
+    # bettingPhase()
 
 
-player1 = input('Hello! What is your name?'+os_linesep)
+# This is where the "main" code begins
+
+player1 = input('Hello! What is your name?{}'.format(os_linesep))
+
+# Creating more player names for testing purposes
 nameList = [player1, "Bob", "Tom", "Sam"]
-playerList = [Player(x) for x in nameList]  # list comprehension, short hand for generating a list in a loop
-init(playerList)
+
+# Creates a list of player objects based on the names pulled from nameList
+playerList = [Player(x) for x in nameList]
+
+initiate(playerList)
