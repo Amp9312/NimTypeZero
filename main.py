@@ -27,8 +27,10 @@ class Deck:
                 self.cards.append(Card(s, v))
 
     def __str__(self):
+        result = ""
         for c in self.cards:
-            print(c)
+            result += c + os_linesep
+        return result
 
     def shuffle(self):
         random.shuffle(self.cards)
