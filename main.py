@@ -1,6 +1,6 @@
 # Dev - Amp
 # Project - Nim Type Zero
-# Last Modified 1/27/2022
+# Last Modified 10/5/2022
 
 # TODO
 # Add getter methods as more properties in the player object are made
