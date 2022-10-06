@@ -3,7 +3,7 @@
 # Last Modified 10/5/2022
 
 # TODO
-# Add getter methods as more properties in the player object are made
+## Add getter methods as more properties in the player object are made
 # Implement betting logic
 # seperate actions into bot methods and human methods
 # folding after open also crashes game - bots seemingly cannot continue to function without player playing
@@ -12,12 +12,13 @@
 # No current end state for betting phase (all bots calling once and then player calling) for betting phase.
 # Float input for betting amounts crashes game.
 # Need a way to push to "reward" for playing phase.
+# Break this up into more files
 
 # GLOBAL ASS VARIABLES - SIN DO NOT COMMIT THIS HERESY LATER
 
 CARDTAGS = ["Spades", "Hearts", "Diamonds", "Clubs"]
 
-VERSION = "3.0"
+VERSION = "0.3.1"
 
 POT = 0
 TURN_COUNT = 0
@@ -93,6 +94,9 @@ class Player:
     def transferMoney(self, amount):
         self.subMoney(amount)
         addPot(amount)
+
+    def checkHuman(self, isHuman):
+        return self.isHuman
 
     def fold(self):
         self.status = "Fold"
@@ -180,10 +184,10 @@ class Player:
                 if(self.checkMoney() >= highest_bet):
                     self.transferMoney(highest_bet)
                     bettingAmount = highest_bet
-                    print("Current Money: " + str(self.checkMoney()))
-                    print("Current Pot: " + str(POT))
+                    print("Current Money: {}".format(self.checkMoney(), os_linesep))
+                    print("Current Pot: {}".format(POT, os_linesep))
                     self.setStatus("Call")
-                    print("Player status is: " + str(self.checkStatus()))
+                    print("Player status is: {}".format(self.checkStatus(), os_linesep))
                 else:
                     print("Your amount of money does not match current highest bet")
                     return -1
